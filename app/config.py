@@ -1,11 +1,6 @@
-from flask import Flask, request, jsonify, redirect
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from dotenv import load_dotenv, dotenv_values
+from app.config import app, db
 
-app = Flask(__name__)
-load_dotenv()
-
-env = dotenv_values()
-
-if __name__ == "__main__":
-    app.run(debug=True)
+from app.routes import routes
+app.register_blueprint(routes)
