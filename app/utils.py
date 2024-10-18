@@ -2,7 +2,7 @@ import string
 import random
 
 class URLShortener:
-    def generate_short_url(self): # generates random string for shortened url, could also add checks for duplicate entries later
+    def generate_short_url(self): # generates random string for shortened url. todo: could also add checks for duplicate entries later
         characters = string.ascii_letters + string.digits
         short_url = ''
         for i in range(6):
