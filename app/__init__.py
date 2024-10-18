@@ -1,10 +1,6 @@
 from app.config import Config, Database
+from app.routes import URLRoutes
 
-config = Config()
-app = config.init_app()
-
-database = Database(app)
-db = database.get_db()
-
-from app.routes import routes
-app.register_blueprint(routes)
+app = Config().init_app()
+db = Database(app).get_db()
+app.register_blueprint(URLRoutes().routes)
