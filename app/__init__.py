@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from dotenv import load_dotenv, dotenv_values
+from dotenv import load_dotenv
 from urllib.parse import quote
+import os
 
 db = SQLAlchemy()
 
@@ -10,12 +11,11 @@ def create_app():
     
     # loads environment variables
     load_dotenv()
-    env = dotenv_values('.env')
 
-    db_password = quote(env["DB_PASSWORD"]) # used for db passwords with special characters
+    db_password = quote(os.getenv("DB_PASSWORD")) # used for db passwords with special characters
     
     # configures the app
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{env["DB_USER"]}:{db_password}@{env["DB_HOST"]}:{env["DB_PORT"]}/{env["DB_NAME"]}'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{os.getenv("DB_USER")}:{db_password}@{os.getenv("DB_HOST")}:{os.getenv("DB_PORT")}/{os.getenv("DB_NAME")}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     # initializes the database
