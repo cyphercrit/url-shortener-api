@@ -16,7 +16,7 @@ def create_app():
     db_password = quote(os.getenv("DB_PASSWORD")) # used for db passwords with special characters
     
     # configures the app
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{os.getenv("DB_USER")}:{db_password}@{os.getenv("DB_HOST")}:{os.getenv("DB_PORT")}/{os.getenv("DB_NAME")}?connect_timeout=10'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{os.getenv("DB_USER")}:{db_password}@{os.getenv("DB_HOST")}:{os.getenv("DB_PORT")}/{os.getenv("DB_NAME")}?sslmode=require'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     # initializes the database
@@ -27,11 +27,10 @@ def create_app():
     app.register_blueprint(URLRoutes().routes)
 
     # configures logging for azure logstream
-    if not app.debug:
-        logging.basicConfig(level=logging.INFO)
-        logger = logging.getLogger()
-        handler = logging.StreamHandler()
-        handler.setLevel(logging.INFO)
-        logger.addHandler(handler)
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger()
+    handler = logging.StreamHandler()
+    handler.setLevel(logging.INFO)
+    logger.addHandler(handler)
     
     return app
