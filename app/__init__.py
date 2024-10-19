@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 from urllib.parse import quote
 import os
+import logging # for azure logstream
 
 db = SQLAlchemy()
 
@@ -24,5 +25,13 @@ def create_app():
     # registers blueprints
     from app.routes import URLRoutes
     app.register_blueprint(URLRoutes().routes)
+
+    # configures logging for azure logstream
+    if not app.debug:
+        logging.basicConfig(level=logging.INFO)
+        logger = logging.getLogger()
+        handler = logging.StreamHandler()
+        handler.setLevel(logging.INFO)
+        logger.addHandler(handler)
     
     return app
