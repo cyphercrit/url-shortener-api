@@ -14,6 +14,11 @@ class URLRoutes:
 
     def shorten_url(self):
         original_url = request.json['url']
+
+        existing_url = URL.query.filter_by(original_url=original_url).first()
+        if existing_url: # checks to see if long url already has a short url
+            return jsonify({'short_url': existing_url.short_url})
+        
         short_url = self.url_shortener.generate_short_url()
         new_url = URL(original_url=original_url, short_url=short_url) # generates short url
         db.session.add(new_url)
