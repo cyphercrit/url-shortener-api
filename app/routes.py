@@ -15,6 +15,9 @@ class URLRoutes:
     def shorten_url(self):
         original_url = request.json['url']
 
+        if not original_url.startswith(('http://', 'https://')): # checks to see if url starts with https:// or http://
+            original_url = 'https://' + original_url # defaults to https://
+
         existing_url = URL.query.filter_by(original_url=original_url).first()
         if existing_url: # checks to see if long url already has a short url
             return jsonify({'short_url': existing_url.short_url})
