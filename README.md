@@ -31,7 +31,7 @@ DB_PORT=your_db_port
 DB_NAME=your_db_name
 ```
 
-### 5. Run the API
+### 4. Run the API
 
 #### For Testing
 ```
