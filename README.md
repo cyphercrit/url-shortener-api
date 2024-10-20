@@ -32,6 +32,13 @@ DB_NAME=your_db_name
 ```
 
 ### 5. Run the API
+
+#### For Testing
+```
+python wsgi.py
+```
+
+#### For Production (Unix Only)
 ```sh
 gunicorn -c gunicorn_config.py wsgi:app
 ```
