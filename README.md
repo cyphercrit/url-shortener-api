@@ -33,7 +33,7 @@ DB_NAME=your_db_name
 
 ### 5. Run the API
 ```sh
-py run.py
+gunicorn -c gunicorn_config.py wsgi:app
 ```
 
 ## Testing the URL Shortener
