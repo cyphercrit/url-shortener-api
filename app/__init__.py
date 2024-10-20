@@ -1,8 +1,9 @@
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 from urllib.parse import quote
 import os
+import logging
 
 db = SQLAlchemy()
 
@@ -24,5 +25,15 @@ def create_app():
     # registers blueprints
     from app.routes import URLRoutes
     app.register_blueprint(URLRoutes().routes)
+
+    # configures Flask logging
+    handler = logging.StreamHandler()
+    handler.setLevel(logging.INFO)
+    app.logger.addHandler(handler)
+
+    @app.before_request
+    def log_request_info():
+        app.logger.info('Headers: %s', request.headers)
+        app.logger.info('Body: %s', request.get_data())
     
     return app
