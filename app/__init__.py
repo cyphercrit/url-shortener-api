@@ -18,6 +18,8 @@ def create_app():
     # configures the app
     app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{os.getenv("DB_USER")}:{db_password}@{os.getenv("DB_HOST")}:{os.getenv("DB_PORT")}/{os.getenv("DB_NAME")}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_pre_ping': True}
+
     
     # initializes the database
     db.init_app(app)
