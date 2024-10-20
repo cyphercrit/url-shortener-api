@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify, redirect
 from app.models import URL
 from app.utils import URLShortener
 from app import db
+import re
 
 class URLRoutes:
     def __init__(self):
@@ -17,6 +18,10 @@ class URLRoutes:
 
         if not original_url.startswith(('http://', 'https://')): # checks to see if url starts with https:// or http://
             original_url = 'https://' + original_url # defaults to https://
+        
+        pattern = r'.*\.[a-zA-Z]{2,}$' # checks for .com, .net, etc ending
+        if not re.match(pattern, original_url):
+            return jsonify({'error': 'Invalid URL format'}), 400 
 
         existing_url = URL.query.filter_by(original_url=original_url).first()
         if existing_url: # checks to see if long url already has a short url
