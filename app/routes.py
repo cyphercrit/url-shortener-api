@@ -3,6 +3,7 @@ from app.models import URL
 from app.utils import URLShortener
 from app import db
 import re
+import socket
 
 class URLRoutes:
     def __init__(self):
@@ -22,6 +23,15 @@ class URLRoutes:
         pattern = r'.*\.[a-zA-Z]{2,}$' # checks for .com, .net, etc ending
         if not re.match(pattern, original_url):
             return jsonify({'error': 'Invalid URL format'}), 400 
+        
+        # extracts domain from url
+        domain = original_url.split("//")[-1].split("/")[0]
+        
+        # checks if to-be-shortened website exists
+        try:
+            socket.gethostbyname(domain)
+        except socket.gaierror:
+            return jsonify({'error': 'Provided domain doesn\'t exist'}), 400
 
         existing_url = URL.query.filter_by(original_url=original_url).first()
         if existing_url: # checks to see if long url already has a short url
