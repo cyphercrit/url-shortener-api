@@ -20,9 +20,9 @@ class URLRoutes:
         if not original_url.startswith(('http://', 'https://')): # checks to see if url starts with https:// or http://
             original_url = 'https://' + original_url # defaults to https://
         
-        pattern = r'.*\.[a-zA-Z]{2,}$' # checks for .com, .net, etc ending
+        pattern = r'^https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(/.*)?$'
         if not re.match(pattern, original_url):
-            return jsonify({'error': 'Invalid URL format'}), 400 
+            return jsonify({'error': 'Invalid URL format'}), 400
         
         # extracts domain from url
         domain = original_url.split("//")[-1].split("/")[0]
