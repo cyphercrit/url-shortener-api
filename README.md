@@ -47,12 +47,12 @@ gunicorn -c gunicorn_config.py wsgi:app
 
 ### Shortening a URL
 ```sh
-curl -X POST -H "Content-Type: application/json" -d "{\"url\": \"https://www.example.com\"}" http://127.0.0.1:5000/shorten
+curl -X POST -H "Content-Type: application/json" -d "{\"url\": \"https://www.example.com\"}" http://127.0.0.1:8000/shorten
 ```
 
 ### Retrieving a short URL
 ```sh
-curl -L http://127.0.0.1:5000/<short_url>
+curl -L http://127.0.0.1:8000/<short_url>
 ```
 
 ## License
