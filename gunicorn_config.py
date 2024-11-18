@@ -9,4 +9,3 @@ errorlog = "-"   # Log to stderr
 
 # Configure Gunicorn logging
 logger = logging.getLogger('gunicorn.error')
-logger.setLevel(logging.INFO)
